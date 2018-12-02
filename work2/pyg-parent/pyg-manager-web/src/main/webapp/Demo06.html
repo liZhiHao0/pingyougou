@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环</title>
+    <script src="plugins/angularjs/angular.min.js"></script>
+    <script>
+        var app=angular.module("myApp",[]);
+
+        app.controller("myController",function ($scope) {
+            $scope.list=[123,234,'abc','bcs'];
+        });
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+<table>
+    <tr ng-repeat="i in list">
+        <td>{{i}}</td>
+    </tr>
+</table>
+</body>
+</html>
