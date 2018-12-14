@@ -31,25 +31,7 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		);				
 	}
 	
-	//保存 
-	$scope.save=function(){				
-		var serviceObject;//服务层对象  				
-		if($scope.entity.id!=null){//如果有ID
-			serviceObject=itemCatService.update( $scope.entity ); //修改  
-		}else{
-			serviceObject=itemCatService.add( $scope.entity  );//增加 
-		}				
-		serviceObject.success(
-			function(response){
-				if(response.success){
-					//重新查询 
-		        	$scope.reloadList();//重新加载
-				}else{
-					alert(response.message);
-				}
-			}		
-		);				
-	}
+
 	
 	 
 	//批量删除 
@@ -76,5 +58,61 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			}			
 		);
 	}
-    
-});	
+
+	//三级分类
+	$scope.findByParentId=function (parentId) {
+		itemCatService.findByParentId(parentId).success(function (response) {
+			$scope.list=response;
+        })
+    }
+
+
+    //面包屑
+	$scope.grade=1;
+	//设置级别
+	$scope.setGrade=function (value) {
+		$scope.grade=value;
+    }
+
+
+    $scope.selectList=function (p_entity) {
+		if($scope.grade==1){
+           $scope.entity_1=null;
+           $scope.entity_2=null;
+		}
+        if($scope.grade==2){
+            $scope.entity_1=p_entity;
+            $scope.entity_2=null;
+        }
+        if($scope.grade==3){
+            $scope.entity_2=p_entity;
+        }
+
+        $scope.findByParentId(p_entity.id);
+    }
+
+
+    //保存
+    $scope.save=function(){
+        var serviceObject;//服务层对象
+        if($scope.entity.id!=null){//如果有ID
+            serviceObject=itemCatService.update( $scope.entity ); //修改
+        }else{
+
+            serviceObject=itemCatService.add( $scope.entity  );//增加
+        }
+        serviceObject.success(
+            function(response){
+                if(response.success){
+                    //重新查询
+                   $scope.reloadList();
+                }else{
+                    alert(response.message);
+                }
+            }
+        );
+    }
+
+
+
+});

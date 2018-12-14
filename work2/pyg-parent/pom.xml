@@ -14,6 +14,14 @@
         <module>pyg-sellergoods-interface</module>
         <module>pyg-sellergoods-service</module>
         <module>pyg-manager-web</module>
+        <module>pyg-shop-web</module>
+        <module>pyg-common</module>
+        <module>pyg-content-interface</module>
+        <module>pyg-content-service</module>
+        <module>pyg-portal-web</module>
+        <module>pyg-search-interface</module>
+        <module>pyg-search-service</module>
+        <module>pyg-search-web</module>
     </modules>
 
 
@@ -89,6 +97,14 @@
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
+
+            <!--用来作缓存的jar包-->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
@@ -235,6 +251,7 @@
                 <artifactId>solr-solrj</artifactId>
                 <version>${solrj.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.janeluo</groupId>
                 <artifactId>ikanalyzer</artifactId>
