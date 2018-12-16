@@ -2,6 +2,7 @@ package com.pinyougou.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.search.service.ItemSearchService;
@@ -93,7 +94,17 @@ public class GoodsController {
 			goodsService.updateStatus(ids, status);
 			if("1".equals(status)){
 				List<TbItem> itemList= goodsService.findItemListByGoodsIdListAndStatus(ids,status);
+				//得到需要导入的SKU列表
+
+				//导入到solr
+				itemSearchService.importList(itemList);
+				//****生成商品详细页
+				for(Long goodsId:ids){
+					itemPageService.genItemHtml(goodsId);
+				}
+
 			}
+
 			return new Result(true, "成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,5 +147,13 @@ public class GoodsController {
 	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
 		return goodsService.findPage(goods, page, rows);		
 	}
-	
+
+	@Reference(timeout=40000)
+	private ItemPageService itemPageService;
+	@RequestMapping("/genHtml")
+	public void genHtml(Long goodsId){
+		itemPageService.genItemHtml(goodsId);
+	}
+
+
 }
