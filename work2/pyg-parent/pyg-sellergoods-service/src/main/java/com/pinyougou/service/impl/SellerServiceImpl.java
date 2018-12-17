@@ -77,8 +77,8 @@ public class SellerServiceImpl implements SellerService {
 	 */
 	@Override
 	public void delete(String[] ids) {
-		for(String id:ids){
-			sellerMapper.deleteByPrimaryKey(id);
+		for(String sellerId:ids){
+			sellerMapper.deleteByPrimaryKey(sellerId);
 		}		
 	}
 	
